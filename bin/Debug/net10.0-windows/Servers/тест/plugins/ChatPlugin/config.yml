@@ -1,0 +1,10 @@
+# Радиус локального чата в блоках
+local-chat-radius: 500
+
+# Формат сообщений
+format:
+  global: "&7[&6Global&7] &6%player%&7: &6%message%"
+  local: "&7[Local] &f%player%&7: &f%message%"
+  clan: "&7[&eКлан&7] &e%player%&7: &e%message%"
+  private-out: "&5(мне -> &d%target%&5): &d%message%"
+  private-in: "&5(&d%sender%&5 -> мне): &d%message%"

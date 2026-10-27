@@ -1,0 +1,415 @@
+﻿<Window x:Class="MCServerManager.ServerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Управление сервером"
+        Height="820"
+        Width="1120"
+        MinHeight="640"
+        MinWidth="960"
+        WindowStartupLocation="CenterOwner"
+        FontFamily="Segoe UI"
+        FontSize="13"
+        Background="{DynamicResource Brush.AppBackground}"
+        Foreground="{DynamicResource Brush.TextPrimary}">
+
+    <Grid Background="{DynamicResource Brush.AppBackground}">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="330" />
+        </Grid.ColumnDefinitions>
+
+
+        <!-- ==================== Левая часть: консоль и информация ==================== -->
+
+        <Grid Grid.Column="0"
+              Margin="18,16,10,16">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+
+            <TabControl Grid.Row="0">
+
+
+                <!-- ===================== КОНСОЛЬ ===================== -->
+
+                <TabItem Header="Консоль">
+
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+
+                        <TextBox x:Name="ConsoleOutput"
+                                 Grid.Row="0"
+                                 Style="{StaticResource ConsoleTextBox}"
+                                 FontSize="14"
+                                 IsReadOnly="True" />
+
+
+                        <DockPanel Grid.Row="1"
+                                   Margin="0,10,0,0">
+
+                            <Button Content="Отправить"
+                                    DockPanel.Dock="Right"
+                                    Width="130"
+                                    Margin="8,0,0,0"
+                                    Click="SendCommand_Click" />
+
+                            <TextBox x:Name="CommandBox"
+                                     VerticalAlignment="Center" />
+
+                        </DockPanel>
+
+                    </Grid>
+
+                </TabItem>
+
+
+                <!-- ===================== ИНФОРМАЦИЯ ===================== -->
+
+                <TabItem Header="Информация">
+
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+
+                        <StackPanel MaxWidth="620"
+                                    HorizontalAlignment="Left">
+
+                            <TextBlock x:Name="InfoStatusText"
+                                       Text="🔴 Остановлен"
+                                       FontSize="20"
+                                       FontWeight="Bold"
+                                       Margin="0,0,0,12" />
+
+
+                            <Border Style="{StaticResource Card}">
+
+                                <StackPanel>
+
+                                    <TextBlock Text="Адрес для тебя (этот же компьютер)"
+                                               Style="{StaticResource CardTitle}" />
+
+                                    <TextBox x:Name="InfoLocalIpBox"
+                                             Style="{StaticResource InfoBox}"
+                                             Text="localhost:25565" />
+
+
+                                    <TextBlock Text="Адрес для друзей (через интернет)"
+                                               Style="{StaticResource FieldLabel}" />
+
+                                    <DockPanel>
+
+                                        <Button Content="🔄"
+                                                DockPanel.Dock="Right"
+                                                Width="42"
+                                                Margin="8,0,0,0"
+                                                ToolTip="Обновить внешний IP"
+                                                Click="RefreshPublicIp_Click" />
+
+                                        <TextBox x:Name="InfoPublicIpBox"
+                                                 Style="{StaticResource InfoBox}"
+                                                 Text="определяется..." />
+
+                                    </DockPanel>
+
+                                    <TextBlock Text="Чтобы друзья зашли через интернет, пробрось порт сервера на роутере."
+                                               Style="{StaticResource HintText}" />
+
+                                </StackPanel>
+
+                            </Border>
+
+
+                            <Border Style="{StaticResource Card}"
+                                    Margin="0,10,0,0">
+
+                                <StackPanel>
+
+                                    <TextBlock Text="Сервер"
+                                               Style="{StaticResource CardTitle}" />
+
+                                    <TextBlock Text="Версия"
+                                               Style="{StaticResource FieldLabel}"
+                                               Margin="0,0,0,4" />
+
+                                    <TextBox x:Name="InfoVersionBox"
+                                             Style="{StaticResource InfoBox}" />
+
+
+                                    <TextBlock Text="Ядро"
+                                               Style="{StaticResource FieldLabel}" />
+
+                                    <TextBox x:Name="InfoCoreBox"
+                                             Style="{StaticResource InfoBox}" />
+
+
+                                    <TextBlock Text="Домен (если куплен)"
+                                               Style="{StaticResource FieldLabel}" />
+
+                                    <DockPanel>
+
+                                        <Button Content="Сохранить"
+                                                DockPanel.Dock="Right"
+                                                Width="110"
+                                                Margin="8,0,0,0"
+                                                Click="SaveDomain_Click" />
+
+                                        <TextBox x:Name="InfoDomainBox" />
+
+                                    </DockPanel>
+
+                                    <TextBlock Text="Направь A-запись домена у регистратора на внешний IP выше — программа домен не покупает и DNS не настраивает."
+                                               Style="{StaticResource HintText}" />
+
+                                </StackPanel>
+
+                            </Border>
+
+
+                            <Border Style="{StaticResource Card}"
+                                    Margin="0,10,0,0">
+
+                                <StackPanel>
+
+                                    <TextBlock Text="Мир"
+                                               Style="{StaticResource CardTitle}" />
+
+                                    <TextBlock Text="Перед скачиванием или загрузкой мира сервер нужно остановить."
+                                               Style="{StaticResource HintText}"
+                                               Margin="0,0,0,10" />
+
+                                    <WrapPanel>
+
+                                        <Button Content="📥 Скачать мир"
+                                                Height="36"
+                                                MinWidth="150"
+                                                Margin="0,0,8,8"
+                                                Click="DownloadWorld_Click" />
+
+                                        <Button Content="📤 Загрузить мир"
+                                                Height="36"
+                                                MinWidth="150"
+                                                Margin="0,0,8,8"
+                                                Click="UploadWorld_Click" />
+
+                                    </WrapPanel>
+
+                                </StackPanel>
+
+                            </Border>
+
+                        </StackPanel>
+
+                    </ScrollViewer>
+
+                </TabItem>
+
+            </TabControl>
+
+
+            <WrapPanel Grid.Row="1"
+                       Margin="0,12,0,0">
+
+                <Button Content="▶ Запустить"
+                        Style="{StaticResource AccentButton}"
+                        Height="38"
+                        MinWidth="150"
+                        Margin="0,0,8,0"
+                        Click="StartServer_Click" />
+
+                <Button Content="■ Остановить"
+                        Style="{StaticResource DangerButton}"
+                        Height="38"
+                        MinWidth="150"
+                        Click="StopServer_Click" />
+
+            </WrapPanel>
+
+        </Grid>
+
+
+        <!-- ==================== Правая часть: игроки, баны, whitelist ==================== -->
+
+        <Border Grid.Column="1"
+                Background="{DynamicResource Brush.SidebarBackground}"
+                BorderBrush="{DynamicResource Brush.Separator}"
+                BorderThickness="1,0,0,0">
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+
+                <StackPanel Margin="16,16,16,16">
+
+
+                    <Border Style="{StaticResource Card}">
+
+                        <StackPanel>
+
+                            <TextBlock Text="Игроки онлайн"
+                                       Style="{StaticResource CardTitle}" />
+
+                            <ListBox x:Name="PlayersListBox"
+                                     Height="170" />
+
+
+                            <StackPanel Margin="0,10,0,0">
+
+                                <Button Content="Кик"
+                                        Height="34"
+                                        MinWidth="130"
+                                        Margin="0,0,0,6"
+                                        Click="Kick_Click" />
+
+                                <Button Content="Бан"
+                                        Style="{StaticResource DangerButton}"
+                                        Height="34"
+                                        MinWidth="130"
+                                        Margin="0,0,0,6"
+                                        Click="Ban_Click" />
+
+                                <Button Content="Забанить IP"
+                                        Style="{StaticResource DangerButton}"
+                                        Height="34"
+                                        MinWidth="130"
+                                        Margin="0,0,0,6"
+                                        Click="BanIp_Click" />
+
+                                <Button Content="Выдать OP"
+                                        Height="34"
+                                        MinWidth="130"
+                                        Margin="0,0,0,6"
+                                        Click="Op_Click" />
+
+                                <Button Content="Снять OP"
+                                        Height="34"
+                                        MinWidth="130"
+                                        Margin="0,0,0,6"
+                                        Click="Deop_Click" />
+
+                                <Button Content="🔄 Обновить"
+                                        Height="34"
+                                        MinWidth="130"
+                                        Margin="0,0,0,6"
+                                        Click="RefreshPlayers_Click" />
+
+                            </StackPanel>
+
+                        </StackPanel>
+
+                    </Border>
+
+
+                    <Border Style="{StaticResource Card}"
+                            Margin="0,10,0,0">
+
+                        <StackPanel>
+
+                            <TextBlock Text="Забаненные IP"
+                                       Style="{StaticResource CardTitle}" />
+
+                            <ListBox x:Name="BannedIpsListBox"
+                                     Height="90" />
+
+                            <Button Content="Разбанить IP"
+                                    Height="34"
+                                    Margin="0,10,0,0"
+                                    Click="UnbanIp_Click" />
+
+                        </StackPanel>
+
+                    </Border>
+
+
+                    <Border Style="{StaticResource Card}"
+                            Margin="0,10,0,0">
+
+                        <StackPanel>
+
+                            <TextBlock Text="Забаненные игроки"
+                                       Style="{StaticResource CardTitle}" />
+
+                            <ListBox x:Name="BannedListBox"
+                                     Height="90" />
+
+
+                            <StackPanel Margin="0,10,0,0">
+
+                                <Button Content="Разбан"
+                                        Height="34"
+                                        MinWidth="130"
+                                        Margin="0,0,8,0"
+                                        Click="Unban_Click" />
+
+                                <Button Content="🔄 Обновить"
+                                        Height="34"
+                                        MinWidth="130"
+                                        Click="RefreshBanned_Click" />
+
+                            </StackPanel>
+
+                        </StackPanel>
+
+                    </Border>
+
+
+                    <Border Style="{StaticResource Card}"
+                            Margin="0,10,0,0">
+
+                        <StackPanel>
+
+                            <TextBlock Text="Белый список"
+                                       Style="{StaticResource CardTitle}" />
+
+                            <CheckBox x:Name="WhitelistEnabledCheckBox"
+                                      Content="Whitelist включён"
+                                      Click="WhitelistEnabledCheckBox_Click" />
+
+                            <ListBox x:Name="WhitelistListBox"
+                                     Height="110"
+                                     Margin="0,10,0,0" />
+
+                            <TextBox x:Name="WhitelistNameBox"
+                                     Margin="0,10,0,0" />
+
+
+                            <StackPanel Margin="0,10,0,0">
+
+                                <Button Content="Добавить"
+                                        Height="34"
+                                        MinWidth="130"
+                                        Margin="0,0,0,6"
+                                        Click="WhitelistAdd_Click" />
+
+                                <Button Content="Удалить"
+                                        Style="{StaticResource DangerButton}"
+                                        Height="34"
+                                        MinWidth="130"
+                                        Margin="0,0,0,6"
+                                        Click="WhitelistRemove_Click" />
+
+                                <Button Content="🔄 Обновить"
+                                        Height="34"
+                                        MinWidth="130"
+                                        Margin="0,0,0,6"
+                                        Click="WhitelistRefresh_Click" />
+
+                            </StackPanel>
+
+                        </StackPanel>
+
+                    </Border>
+
+                </StackPanel>
+
+            </ScrollViewer>
+
+        </Border>
+
+    </Grid>
+
+</Window>

@@ -1,0 +1,45 @@
+﻿<Window x:Class="MCServerManager.InstallProgressWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Установка ядра"
+        Height="440"
+        Width="620"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="CanMinimize"
+        FontFamily="Segoe UI"
+        FontSize="13"
+        Background="{DynamicResource Brush.AppBackground}"
+        Foreground="{DynamicResource Brush.TextPrimary}">
+
+    <Grid Margin="18" Background="{DynamicResource Brush.AppBackground}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+
+        <TextBlock x:Name="TitleText"
+                   Grid.Row="0"
+                   Text="Устанавливаю ядро..."
+                   FontSize="18"
+                   FontWeight="Bold"
+                   Margin="0,0,0,12" />
+
+
+        <ProgressBar x:Name="ProgressBarControl"
+                     Grid.Row="1"
+                     IsIndeterminate="True"
+                     Height="10"
+                     Margin="0,0,0,14" />
+
+
+        <TextBox x:Name="LogBox"
+                 Grid.Row="2"
+                 Style="{StaticResource ConsoleTextBox}"
+                 IsReadOnly="True" />
+
+    </Grid>
+
+</Window>

@@ -1,0 +1,20 @@
+﻿<Application x:Class="MCServerManager.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:MCServerManager"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+
+                <!-- Стили всех контролов (цвета берут из палитры ниже) -->
+                <ResourceDictionary Source="Themes/Shared.xaml" />
+
+                <!-- Текущая палитра. При смене темы этот словарь подменяется
+                     на Themes/Dark.xaml — см. Managers/ThemeManager.cs -->
+                <ResourceDictionary Source="Themes/Light.xaml" />
+
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
